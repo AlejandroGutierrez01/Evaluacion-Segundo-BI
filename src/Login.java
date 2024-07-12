@@ -18,13 +18,12 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                try (Connection conectar = DriverManager.getConnection(url, user, password);){
+                try (Connection conectar = DriverManager.getConnection(url, user, password)){
                     System.out.println("Conectado a la base de datos");
-
                     String query = "select username, password from usuario";
                     Statement statement = conectar.createStatement();
                     ResultSet resultSet = statement.executeQuery(query);
-                    while(resultSet.next())
+                    while(resultSet.next()){
                         if(resultSet.getString("username").equals(userText.getText()) && resultSet.getString("password").equals(passwordText.getText())) {
                             JFrame frame = new JFrame();
                             frame.setTitle("Registrar Productos");
@@ -35,8 +34,10 @@ public class Login {
                             frame.setSize(600, 400);
                             frame.setVisible(true);
                             ((JFrame) SwingUtilities.getWindowAncestor(enviarButton)).dispose();
+                        }
                     }
-                }catch (SQLException e1){
+                }
+                catch (SQLException e1){
                     System.out.println(e1);
                 }
             }
